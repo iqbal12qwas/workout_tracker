@@ -1,4 +1,5 @@
 class ExercisesController < ApplicationController
+  
   before_action :authenticate_user!
   before_action :set_exercise, except: [:index, :new, :create]
   def index
@@ -22,6 +23,20 @@ class ExercisesController < ApplicationController
     end
   end
   
+  def edit
+    
+  end
+  
+  def update
+    if @exercise.update(exercise_params)
+      flash[:success] = "Exercise has been updated"
+      redirect_to [current_user, @exercise]
+    else
+      flash[:danger] = "Exercise has not been updated"
+      render :edit
+    end
+  end
+  
   def show
   end
   
@@ -34,4 +49,5 @@ class ExercisesController < ApplicationController
   def set_exercise
     @exercise = current_user.exercises.find(params[:id])
   end
+  
 end
