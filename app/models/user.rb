@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          
   has_many :exercises
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  self.per_page = 4
   
   def full_name
     "#{first_name} #{last_name}"

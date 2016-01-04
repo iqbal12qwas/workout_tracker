@@ -14,7 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~>3.3.4.1'
 gem 'autoprefixer-rails', '~>5.2.0'
 gem 'devise', '~>3.5.1'
-
+gem 'will_paginate-bootstrap'
 group :development, :test do
   gem 'guard-rspec', require: false
   gem 'spring-commands-rspec'
