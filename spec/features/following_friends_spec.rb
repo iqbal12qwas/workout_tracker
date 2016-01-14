@@ -1,26 +1,23 @@
 require "rails_helper"
 
-RSpec.feature "Following friend" do
+RSpec.feature "Following Friends" do
+  before do
+    @john = User.create(first_name: "John", last_name: "Doe", email: "john@example.com", password: "password")
+    @peter = User.create(first_name: "Peter", last_name: "Ed", email: "peter@example.com", password: "password")
     
-    before do
-        @john = User.create(first_name: "John", last_name: "Doe", email: "john@doe.com", password: "password1")
-        @jane = User.create(first_name: "Jane", last_name: "Foe", email: "jane@foe.com", password: "password2")
-        
-        login_as(@john)
-    end
+    login_as(@john)
+  end
+  
+  scenario "if signed in succeeds" do
+    visit "/"
     
-    scenario "if signed in, succeeds" do
-        
-        visit "/"
-        
-        expect(page).to have_content(@john.full_name)
-        expect(page).to have_content(@jane.full_name)
-        expect(page).not_to have_link("Follow", :href => "/friendship?friend_id=#{@john.id}")
-        
-        link = "a[href='friendship?friend_id=#{@jane.id}']"
-        find(link).click
-        
-        expect(page).not_to have_link("Follow", :href => "/friendship?friend_id=#{@jane.id}")
-        
-    end
+    expect(page).to have_content(@john.full_name)
+    expect(page).to have_content(@peter.full_name)
+    expect(page).not_to have_link("Follow", :href => "/friendships?friend_id=#{@john.id}")
+    
+    link = "a[href='/friendships?friend_id=#{@peter.id}']"
+    find(link).click
+    
+    expect(page).not_to have_link("Follow", :href => "/friendships?friend_id=#{@peter.id}")
+  end  
 end
